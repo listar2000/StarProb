@@ -1,4 +1,5 @@
 import inspect, sys
+import random
 
 """
 @source https://inst.eecs.berkeley.edu/~cs188/fa19/project3/
@@ -30,3 +31,18 @@ def raiseIfNotAllNumeric(*collections):
 						print("*** Elements of %s in method %s should be all numeric" %
 							(varName, method))
 						sys.exit(1)
+
+"""
+A list of random-related functions
+"""
+
+seedFlag = False
+
+def seed(se = None):
+	if not se:
+		import time
+		se = round(time.time())
+	random.seed(se)
+
+	
+

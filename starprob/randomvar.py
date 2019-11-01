@@ -82,6 +82,9 @@ class MultinomRV:
             tag = alias[i] if i < len(alias) else None
             self.choices.append( (culProb, normP, val[i], tag) )
     
+    def rand(n = 1):
+        
+    
     def expectation(self):
         if not self.valFlag:
             print("=> Values not given in constructor. Auto-generated values may have no meaning")
