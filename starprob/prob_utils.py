@@ -1,4 +1,5 @@
 import inspect, sys
+import random
 
 """
 Effective way of raising undefined value is inspired by Berkeley AI project
@@ -48,3 +49,18 @@ def raiseIfNotAllNumeric(*collections):
 						print("*** Elements of %s in method %s should be all numeric" %
 							(varName, method))
 						sys.exit(1)
+
+"""
+A list of random-related functions
+"""
+
+seedFlag = False
+
+def seed(se = None):
+	if not se:
+		import time
+		se = round(time.time())
+	random.seed(se)
+
+	
+
