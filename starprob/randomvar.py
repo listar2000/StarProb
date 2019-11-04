@@ -83,7 +83,7 @@ class MultinomRV(BaseRV):
             self.choices.append( (culProb, normP, val[i], tag) )
     
     def rand(n = 1):
-        
+        pass        
     
     def expectation(self):
         if not self.valFlag:
