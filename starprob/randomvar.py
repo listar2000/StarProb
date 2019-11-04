@@ -15,7 +15,7 @@ class BaseRV:
     def sd(self):
         util.raiseUndefined()
 
-class MultinomRV:
+class MultinomRV(BaseRV):
     """
     chs = [
         {"p": 0.5, "alias": "good"},
@@ -95,6 +95,52 @@ class MultinomRV:
     
     def sd(self):
         return sqrt(self.variance())
+
+class ExponentialRV(BaseRV):
+    """
+    Discription:
+    A continuous random variable that follows exponential distribution, which is the 
+    time between successive arrival (event) in a Poisson arrival process.
+
+    Connections:
+    1. The summation of multiple independent exponential random varibles creates a gamma 
+    random variable.
+    2. Let c be a constant, and X a standard exponential random variable (lambda = 1), 
+    then cX follows a exponential distribution with lambda = 1/c
+    """
+
+    # class methods 
+    def __init__(self, lambd = 1):
+        if lambd <= 0:
+            raise util.raiseIllValue("lambda <= 0", True)
+        self.lambd = lambd
+    
+    def expectation(self):
+        return ExponentialRV.get_exp(self.lambd)
+    
+    def variance(self):
+        return ExponentialRV.get_var(self.lambd)
+    
+    def sample(self):
+        pass
+
+    # static methods
+    @staticmethod
+    def get_exp(lambd):
+        if not lambd:
+            util.raiseMissingArgument("lambd")
+            return None
+        return 1 / lambd
+    
+    @staticmethod
+    def get_var(lambd):
+        return 1 / lambd ** 2
+
+
+
+
+
+
 
 
 

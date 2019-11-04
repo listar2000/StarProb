@@ -1,6 +1,7 @@
 import inspect, sys
 
 """
+Effective way of raising undefined value is inspired by Berkeley AI project
 @source https://inst.eecs.berkeley.edu/~cs188/fa19/project3/
 """
 def raiseUndefined():
@@ -16,6 +17,23 @@ def raiseMissingArgument(argname):
 	print("*** Argument %s missing from method %s in %s" % 
 		  (argname, method, fileName))
 	sys.exit(1)
+
+class raiseIllValue(Exception):
+	def __init__(self, condition, show_class = False):
+		frame = inspect.stack()[1]
+		line, method = frame[2], frame[3]
+		original_cb = sys.excepthook
+		def error_callback(a, b, c):
+			if show_class:
+				calling_class = frame[0].f_locals["self"].__class__
+				print("*** Value Error: %s at line %s in %s() at %s" % 
+				(condition, line, method, calling_class))
+			else:
+				print("*** Value Error: %s at line %s in method %s" % 
+				(condition, line, method))
+			# return original call_back after using this custom exception
+			sys.excepthook = original_cb
+		sys.excepthook = error_callback
 
 def raiseIfNotAllNumeric(*collections):
 	for collection in collections:
