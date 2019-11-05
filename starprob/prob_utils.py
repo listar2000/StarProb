@@ -2,6 +2,10 @@ import inspect, sys
 import random
 
 """
+List of custom errors
+"""
+
+"""
 Effective way of raising undefined value is inspired by Berkeley AI project
 @source https://inst.eecs.berkeley.edu/~cs188/fa19/project3/
 """
@@ -50,6 +54,11 @@ def raiseIfNotAllNumeric(*collections):
 							(varName, method))
 						sys.exit(1)
 
+def raiseIfTypeNotCompatible(var, *types):
+	if not isinstance(var, tuple(types)):
+		raise TypeError("*** %s need to be of type %s" % (var, types))
+
+
 """
 A list of random-related functions
 """
@@ -62,5 +71,28 @@ def seed(se = None):
 		se = round(time.time())
 	random.seed(se)
 
-	
+"""
+A list of generalized statistics methods
+"""
+def mean(*collections):
+	sz = len(collections)
+	if sz == 0: 
+		return 0
+	if sz == 1:
+		collection = collections[0]
+		return sum(collection) / len(collection)
+	else:
+		return sum(collections) / len(collections)
+
+def variance(*collections):
+	coll_mean = mean(*collections)
+
+	square_diff = 0
+	if len(collections) == 1:
+		collections = collections[0]
+
+	for item in collections:
+		square_diff = square_diff + (item - coll_mean) ** 2
+	return square_diff / len(collections)
+
 

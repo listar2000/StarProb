@@ -1,5 +1,6 @@
 import prob_utils as util
 from math import * 
+from random import uniform
 
 class BaseRV:
     
@@ -124,8 +125,8 @@ class ExponentialRV(BaseRV):
     def variance(self):
         return ExponentialRV.get_var(self.lambd)
     
-    def sample(self):
-        pass
+    def sample(self, n = 1):
+        return ExponentialRV.rand(self.lambd, n)
 
     # static methods
     @staticmethod
@@ -138,6 +139,32 @@ class ExponentialRV(BaseRV):
     @staticmethod
     def get_var(lambd):
         return 1 / lambd ** 2
+    
+    @staticmethod
+    def rand(lambd, n = 1):
+        if not lambd:
+            util.raiseMissingArgument("lambd")
+            return None
+        util.raiseIfTypeNotCompatible(n, int)
+
+        samps = []
+        for i in range(n):
+            raw_samp = uniform(0, 1)
+            exp_samp = (-log(raw_samp)) / lambd
+            samps.append(exp_samp)
+        return samps
+
+    # moment generating function for exponential distribution
+    @staticmethod
+    def mgf(lambd = 1):
+        def exp_mgf(t):
+            if t > lambd:
+                raise ValueError("t must be larger than lambd")
+            return lambd / (lambd - t)
+        return exp_mgf
+    
+
+
 
 
 
